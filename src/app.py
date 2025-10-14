@@ -289,8 +289,8 @@ if df is not None:
     model = RandomForestClassifier(random_state=42, n_estimators=30, max_depth=1, min_samples_split=2, min_samples_leaf=3)
     model.fit(X_train, y_train)
         #train y test 
-    if st.button("acirtos de los ultimos 100 dias"):
-        st.write("Calculando aciertos...")         
+    if st.button("Acirtos de los ultimos 100 dias"):
+                
         #train y test 
         n_filas=len(df["close"])
         corr_direccion=0
@@ -310,7 +310,7 @@ if df is not None:
         for i in range(100):
             print(i)
             #vamos a separar los datos de entreno y los outsider
-            entreno=df[0+1+i:n_filas-101+i]
+            entreno=df[0+2+i:n_filas-101+i]
             outsider=df[n_filas-101+i+1:n_filas-101+i+2]
             #print(outsider)
             outsider.reset_index(drop=True,inplace=True)
@@ -333,10 +333,11 @@ if df is not None:
             if predicciones_outsider[0]==y_outsider[0]:
                 corr_direccion+=1
         aciertos=corr_direccion/100
-        st.write(round(aciertos*100,0))
+        st.write("Obtuvo un acierto del: "+str(round(aciertos*100,0))+"%") 
+        
 
     if st.button("predecir precio"):
-        st.write("Ejecutando predicción...")
+        
         pred = model.predict(df.drop(restricciones, axis=1).tail(1))
         if pred[0] == 1:
             st.write("El modelo predice que el precio subirá mañana 🚀🚀🚀")
